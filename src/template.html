@@ -4,6 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css"
+      integrity="sha512-cn16Qw8mzTBKpu08X0fwhTSv02kK/FojjNLz0bwp2xJ4H+yalwzXKFw/5cLzuBZCxGWIA+95X4skzvo8STNtSg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
-  <body></body>
+  <body>
+    <div id="daysCont" class="days-container"></div>
+
+    <div class="container">
+      <div class="search-bar">
+        <input type="text" id="locationInput" placeholder="Enter a city" />
+        <button id="searchButton">Search</button>
+      </div>
+
+      <div class="weather-info">
+        <div class="row">
+          <h2 id="location" class="location"></h2>
+          <img id="weatherIcon" alt="" />
+        </div>
+        <div class="row">
+          <p id="time" class="time"></p>
+          <p id="description" class="desc"></p>
+        </div>
+
+        <div class="temp-row">
+          <p id="temperature" class="temp"><span id="tempSign"></span></p>
+        </div>
+
+        <div class="temp-row">
+          <p id="minmaxTemp">High/Low:</p>
+        </div>
+
+        <div class="details-row">
+          <div class="humidity">
+            <i class="bx bx-water"></i>
+            <p id="humidity"></p>
+          </div>
+          <div class="wind">
+            <i class="bx bx-wind"></i>
+            <p id="wind"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
