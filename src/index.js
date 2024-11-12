@@ -23,6 +23,7 @@ const description = document.querySelector("#description");
 const wind = document.querySelector("#wind");
 const humidity = document.querySelector("#humidity");
 const daysCont = document.querySelector("#daysCont");
+const loadingDiv = document.getElementById("loading");
 
 const weatherIcons = {
   snow: snowImg,
@@ -36,6 +37,32 @@ const weatherIcons = {
   "clear-night": clearNightImg,
 };
 
+const backgroundColors = {
+  "clear-day": "#00BFFF",
+  "clear-night": "#2C3E50",
+  "partly-cloudy-day": "#708090",
+  "partly-cloudy-night": "#708090",
+  cloudy: "#708090",
+  rain: "#696969",
+  snow: "#B0E0E6",
+  fog: "#D3D3D3",
+  wind: "#A9C4D8",
+};
+
+function chooseBackgroundColor(data) {
+  document.body.style.backgroundColor = backgroundColors[data.icon];
+}
+
+// loadingDiv.addEventListener("click", hideSpinner);
+
+function showSpinner() {
+  loadingDiv.style.display = "block";
+}
+
+function hideSpinner() {
+  loadingDiv.style.display = "none";
+}
+
 async function fetchWeatherData(location) {
   let baseAPI =
     "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/location?unitGroup=metric&key=5EQ6VA7UQLH2SP4CAHMP2HW7K&contentType=json";
@@ -44,24 +71,12 @@ async function fetchWeatherData(location) {
     mode: "cors",
   });
   const unprocessedWeatherData = await response.json();
+
   const processedWeatherData = processWeatherData(unprocessedWeatherData);
   console.log(processedWeatherData);
   displayWeatherData(processedWeatherData);
+  chooseBackgroundColor(processedWeatherData);
   displayDays(processedWeatherData);
-}
-
-function displayWeatherData(data) {
-  location.textContent = data.address;
-  time.textContent = data.time;
-  weatherIcon.setAttribute("src", weatherIcons[data.icon]);
-  weatherIcon.alt = data.icon;
-  temperature.textContent = data.temp;
-  temperature.append(tempSign);
-  tempSign.textContent = "°C";
-  minmaxTemperature.textContent = `High/Low: ${data.days[0].tempmax}/${data.days[0].tempmin}`;
-  description.textContent = data.desc;
-  humidity.textContent = "Humidity: " + data.humidity;
-  wind.textContent = "Wind speed: " + data.wind + "km/h";
 }
 
 function displayDays(data) {
@@ -81,9 +96,22 @@ function displayDays(data) {
   });
 }
 
-function displayNextDay(data, loc) {
-  console.log(data);
+function displayWeatherData(data) {
+  location.textContent = data.address;
+  time.textContent = data.time;
+  weatherIcon.setAttribute("src", weatherIcons[data.icon]);
+  weatherIcon.alt = data.icon;
+  temperature.textContent = data.temp;
+  temperature.append(tempSign);
+  tempSign.textContent = "°C";
+  minmaxTemperature.textContent = `High/Low: ${data.days[0].tempmax}°C/${data.days[0].tempmin}°C`;
+  description.textContent = data.desc;
+  humidity.textContent = "Humidity: " + data.humidity;
+  wind.textContent = "Wind speed: " + data.wind + "km/h";
+  hideSpinner();
+}
 
+function displayNextDay(data, loc) {
   location.textContent = loc;
   time.textContent = format(new Date(data.datetime), "dd MMMM, yyyy");
   weatherIcon.setAttribute("src", weatherIcons[data.icon]);
@@ -91,7 +119,7 @@ function displayNextDay(data, loc) {
   temperature.textContent = data.temp;
   temperature.append(tempSign);
   tempSign.textContent = "°C";
-  minmaxTemperature.textContent = `High/Low: ${data.tempmax}/${data.tempmin}`;
+  minmaxTemperature.textContent = `High/Low: ${data.tempmax}°C/${data.tempmin}°C`;
   description.textContent = data.conditions;
   humidity.textContent = "Humidity: " + data.humidity;
   wind.textContent = "Wind speed: " + data.windspeed + "km/h";
@@ -101,7 +129,7 @@ function processWeatherData(data) {
   console.log(data);
 
   return {
-    address: data.resolvedAddress,
+    address: data.address,
     icon: data.currentConditions.icon,
     temp: data.currentConditions.temp,
     currentCondition: data.currentConditions.conditions,
@@ -117,6 +145,7 @@ fetchWeatherData("Kyiv");
 searchButton.addEventListener("click", () => {
   const location = locationInput.value;
   if (location) {
+    showSpinner();
     fetchWeatherData(location);
   }
 });

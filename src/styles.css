@@ -13,10 +13,11 @@ body {
   align-items: center;
   min-height: 100vh;
   min-width: 100%;
-  background: seagreen;
+  background: #a9c4d8;
   /* background: url("./weather-icons/bg.jpg"); */
   background-size: cover;
   background-position: center;
+  font-family: "Roboto", serif;
 }
 
 .days-container {
@@ -30,11 +31,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid #fff;
-  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #0d0d0d;
   height: 100px;
   text-align: center;
+  font-size: 1.2rem;
   padding: 10px;
+  cursor: pointer;
 }
 
 .container {
@@ -44,7 +47,7 @@ body {
   min-height: 550px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(30px);
-  color: #fff;
+  color: #0d0d0d;
   padding: 20px;
 }
 
@@ -62,7 +65,7 @@ body {
   outline: none;
   border-radius: 10px;
   font-size: 20px;
-  color: #fff;
+  color: #0d0d0d;
   font-weight: 500;
   background: transparent;
   /* text-transform: uppercase; */
@@ -70,7 +73,7 @@ body {
 }
 
 .search-bar input::placeholder {
-  color: #fff;
+  color: #0d0d0d;
 }
 
 .search-bar button {
@@ -81,7 +84,7 @@ body {
   border-radius: 10px;
   outline: none;
   font-size: 20px;
-  color: #fff;
+  color: #0d0d0d;
   padding: 0 40px 0 5px;
   cursor: pointer;
 }
@@ -112,6 +115,12 @@ body {
   justify-content: center;
 }
 
+#minmaxTemp {
+  font-size: 1.5rem;
+  padding: 10px;
+  color: #0d0d0d;
+}
+
 .weather-info .temp {
   font-size: 128px;
   font-weight: 700;
@@ -138,4 +147,15 @@ body {
 .details-row {
   display: flex;
   justify-content: space-between;
+}
+
+svg {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  display: inline-block;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
